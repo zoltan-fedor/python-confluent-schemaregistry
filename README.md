@@ -1,15 +1,15 @@
 # Python Schema Registry Client
 
 A Python client used to interact with [Confluent](http://confluent.io/)'s
-[schema registry](https://github.com/confluentinc/schema-registry).  Supports Python 3.4, forked from https://github.com/verisign/python-confluent-schemaregistry to convert to Python 4.
+[schema registry](https://github.com/confluentinc/schema-registry).  Supports Python 3.4, forked from https://github.com/verisign/python-confluent-schemaregistry to convert to Python 3.
 This also works within a virtual env.
 
 The API is heavily based off of the existing Java API of [Confluent schema registry](https://github.com/confluentinc/schema-registry).
 
 # Installation
 
-sudo pip3.4 install avro --proxy=http://xxx.com:80
-sudo pip3.4 install avro-python3 --proxy=http://xxx.com:80
+sudo pip3.4 install avro --proxy=http://xxx.com:80  
+sudo pip3.4 install avro-python3 --proxy=http://xxx.com:80  
 
 Run `python3.4 setup.py install` from the source root.
 

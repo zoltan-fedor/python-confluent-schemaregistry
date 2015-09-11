@@ -1,13 +1,13 @@
-import http.server
+import BaseHTTPServer
 import re
 from threading import Thread
-from . import setup_test_path
+import setup_test_path
 
 from confluent.schemaregistry.client import MockSchemaRegistryClient
 from confluent.schemaregistry.serializers import Util
 import json
 
-class ReqHandler(http.server.BaseHTTPRequestHandler):
+class ReqHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.0"
     def do_GET(self):
         self.server._run_routes(self)
@@ -19,7 +19,7 @@ class ReqHandler(http.server.BaseHTTPRequestHandler):
         pass
 
 
-class MockServer(http.server.HTTPServer, object):
+class MockServer(BaseHTTPServer.HTTPServer, object):
     def __init__(self, *args, **kwargs):
         super(MockServer, self).__init__(*args, **kwargs)
         self.counts = { }

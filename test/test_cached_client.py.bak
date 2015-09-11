@@ -1,14 +1,23 @@
 import unittest2 as unittest
-from . import setup_test_path
-from . import data_gen
+import setup_test_path
+import data_gen
+import mock_registry
+import time
 
-from confluent.schemaregistry.client import MockSchemaRegistryClient
+from confluent.schemaregistry.client import CachedSchemaRegistryClient
 from confluent.schemaregistry.serializers import Util
 
-class TestMockSchemaRegistryClient(unittest.TestCase):
+class TestCacheSchemaRegistryClient(unittest.TestCase):
 
     def setUp(self):
-        self.client = MockSchemaRegistryClient()
+        self.server = mock_registry.ServerThread(9001)
+        self.server.start()
+        self.client = CachedSchemaRegistryClient('http://127.0.0.1:9001')
+        time.sleep(1)
+
+    def tearDown(self):
+        self.server.shutdown()
+        self.server.join()
 
     def test_register(self):
         parsed = Util.parse_schema_from_string(data_gen.BASIC_SCHEMA)

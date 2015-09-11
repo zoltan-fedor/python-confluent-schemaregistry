@@ -1,7 +1,7 @@
 import unittest2 as unittest
-import setup_test_path
-import data_gen
-import mock_registry
+from . import setup_test_path
+from . import data_gen
+from . import mock_registry
 import time
 
 from confluent.schemaregistry.client import CachedSchemaRegistryClient

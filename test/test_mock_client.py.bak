@@ -1,6 +1,6 @@
 import unittest2 as unittest
-from . import setup_test_path
-from . import data_gen
+import setup_test_path
+import data_gen
 
 from confluent.schemaregistry.client import MockSchemaRegistryClient
 from confluent.schemaregistry.serializers import Util

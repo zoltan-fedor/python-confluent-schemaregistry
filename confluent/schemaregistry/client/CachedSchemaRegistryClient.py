@@ -32,8 +32,12 @@ class CachedSchemaRegistryClient(object):
     def _send_request(self, url, method='GET', body=None, headers=None):
         if body:
             body = json.dumps(body)
-
-        new_req = urllib.request.Request(url, data=body)
+        
+        if body:
+            data = body.encode('utf-8')
+        else:
+            data = body
+        new_req = urllib.request.Request(url, data=data) # data should be bytes
         # must be callable
         new_req.get_method = lambda: method
         # set the accept header
@@ -48,9 +52,13 @@ class CachedSchemaRegistryClient(object):
         try:
             response = urllib.request.urlopen(new_req)
             # read response
-            result = json.loads(response.read())
+            result = json.loads(response.read().decode("utf8", 'ignore'))
             # build meta with headers as a dict
-            meta = response.info().dict
+            #print(response.info())
+            #print(response.getheaders())
+            #meta = response.info().dict
+            meta = response.getheaders()
+            meta = dict((k[0], k[1]) for k in meta)
             # http code
             code = response.getcode()
             # return result + meta tuple
@@ -102,9 +110,6 @@ class CachedSchemaRegistryClient(object):
         Multiple instances of the same schema will result in cache misses.
         """
         schemas_to_id = self.subject_to_schema_ids.get(subject, { })
-        print(type(avro_schema))
-        print(avro_schema)
-        print(schemas_to_id)
         
         schema_id = schemas_to_id.get(avro_schema, -1)
         if schema_id != -1:

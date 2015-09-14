@@ -8,6 +8,8 @@ The API is heavily based off of the existing Java API of [Confluent schema regis
 
 # Installation
 
+You will need avro in Python 3. Assuming you are using Python 3.4 behind a firewall you can install the necessary packages this way: 
+
 sudo pip3.4 install avro --proxy=http://xxx.com:80  
 sudo pip3.4 install avro-python3 --proxy=http://xxx.com:80  
 

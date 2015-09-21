@@ -1,5 +1,5 @@
 from avro import io
-import io
+import io as baseio
 import json
 import struct
 import sys
@@ -16,7 +16,7 @@ except:
     pass
 
 
-class ContextStringIO(io.StringIO):
+class ContextStringIO(baseio.BytesIO):
     """
     Wrapper to allow use of StringIO via 'with' constructs.
     """

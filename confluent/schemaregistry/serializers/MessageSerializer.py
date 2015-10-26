@@ -10,7 +10,8 @@ MAGIC_BYTE = 0
 
 HAS_FAST = False
 try:
-    from fastavro.reader import read_data
+    #from fastavro.reader import read_data
+    import fastavro
     HAS_FAST = True
 except:
     pass
@@ -143,13 +144,13 @@ class MessageSerializer(object):
             # try to use fast avro
             try:
                 schema_dict = schema.to_json()
-                obj = read_data(payload, schema_dict)
+                obj = fastavro.reader(payload, schema_dict)
                 # here means we passed so this is something fastavro can do
                 # seek back since it will be called again for the
                 # same payload - one time hit
 
                 payload.seek(curr_pos)
-                decoder_func = lambda p: read_data(p, schema_dict)
+                decoder_func = lambda p: fastavro.reader(p, schema_dict)
                 self.id_to_decoder_func[schema_id] = decoder_func
                 return self.id_to_decoder_func[schema_id]
             except:
